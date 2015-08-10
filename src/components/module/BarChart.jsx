@@ -6,9 +6,9 @@ var React = require('react/addons'),
 var BarChart = React.createClass({
     _repaint: function() {
 
-        var xScale = d3.scale.linear()
-                            .domain([0, 23])
-                            .range([0, this.props.width]);
+        var xScale = d3.scale.ordinal()
+                            .domain(d3.range(23))
+                            .rangeRoundBands([0, this.props.width], 0.01);
 
         var yScale = d3.scale.linear()
                             .domain([0, 10000])
@@ -38,23 +38,30 @@ var BarChart = React.createClass({
             .attr('class', 'x axis')
             .attr('height', 50)
             .attr('width', this.props.width)
-            .attr('transform', 'translate(0, ' + (this.props.height - 50) + ')')
+            .attr('transform', 'translate(0, ' + (this.props.height - 20) + ')')
             .call(xAxis);
 
         axis.append('g')
             .attr('class', 'y axis')
             .attr('height', this.props.height)
             .attr('width', 50)
+            .attr('transform', 'translate(40, 0)')
             .call(yAxis);
 
         axis.selectAll(".bar")
-              .data(dataset)
+                .data(dataset)
             .enter().append("rect")
-              .attr("class", "bar")
-              .attr("x", function(d) { return xScale(d.hour); })
-              .attr("width", xScale.range())
-              .attr("y", function(d) { return yScale(d.step); })
-              .attr("height", function(d) { return that.state.height - yScale(d.step); });
+                .attr("class", "bar")
+                .attr("x", function(d) {
+                    return xScale(d.hour);
+                })
+                .attr("y", function(d) {
+                    return yScale(d.step);
+                })
+                .attr("width", xScale.rangeBand())
+                .attr("height", function(d) {
+                    return that.props.height - yScale(d.step); 
+                });
     },
     getDefaultProps: function() {
         return {
