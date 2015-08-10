@@ -115,10 +115,7 @@ var ArcChart = React.createClass({
     },
     render: function() {
         return (
-            <div>
-                <h1>ArcChart</h1>
-                <svg ref="svg"></svg>
-            </div>
+            <svg ref="svg"></svg>
         );
     }
 });
