@@ -6,13 +6,16 @@ var React = require('react/addons'),
 var BarChart = React.createClass({
     _repaint: function() {
 
+	var barChartHeight = this.props.height - this.state.margin.top - this.state.margin.bottom,
+            barChartWidth = this.props.width - this.state.margin.left - this.state.margin.right;
+
         var xScale = d3.scale.ordinal()
-                            .domain(d3.range(23))
-                            .rangeRoundBands([0, this.props.width], 0.01);
+                            .domain(d3.range(24))
+                            .rangeRoundBands([0, barChartWidth], 0.2);
 
         var yScale = d3.scale.linear()
                             .domain([0, 10000])
-                            .range([this.props.height, 0]);
+                            .range([barChartHeight, 0]);
 
         var xAxis = d3.svg.axis()
                    .scale(xScale)
@@ -20,7 +23,8 @@ var BarChart = React.createClass({
 
         var yAxis = d3.svg.axis()
                    .scale(yScale)
-                   .orient('left');
+                   .orient('left')
+                   .tickFormat(d3.format('s'));
 
 
         var dataset = this.props.data;
@@ -32,20 +36,16 @@ var BarChart = React.createClass({
                     .attr('height', this.props.height);
 
         var axis = svg.append('g')
-                        .attr('transform', 'translate(0, 0)');
+                      .attr('transform', 'translate(' + this.state.margin.left + ', ' + this.state.margin.bottom + ')');
+        
 
         axis.append('g')
             .attr('class', 'x axis')
-            .attr('height', 50)
-            .attr('width', this.props.width)
-            .attr('transform', 'translate(0, ' + (this.props.height - 20) + ')')
+            .attr('transform', 'translate(0, ' + barChartHeight + ')')
             .call(xAxis);
 
         axis.append('g')
             .attr('class', 'y axis')
-            .attr('height', this.props.height)
-            .attr('width', 50)
-            .attr('transform', 'translate(40, 0)')
             .call(yAxis);
 
         axis.selectAll(".bar")
@@ -58,15 +58,17 @@ var BarChart = React.createClass({
                 .attr("y", function(d) {
                     return yScale(d.step);
                 })
+                .attr('rx', xScale.rangeBand() / 2)
+                .attr('ry', 0)
                 .attr("width", xScale.rangeBand())
                 .attr("height", function(d) {
-                    return that.props.height - yScale(d.step); 
+                    return barChartHeight - yScale(d.step); 
                 });
     },
     getDefaultProps: function() {
         return {
-            width: 300,
-            height: 300,
+            width: 320,
+            height: 320,
             data: [
                 {hour: 0, step: 2215},
                 {hour: 1, step: 5542},
@@ -91,12 +93,13 @@ var BarChart = React.createClass({
                 {hour: 20, step: 5237},
                 {hour: 21, step: 3543},
                 {hour: 22, step: 4862},
-                {hour: 23, step: 21}
+                {hour: 23, step: 107}
             ]
         };
     },
     getInitialState: function() {
         return {
+	    margin: {top: 20, right: 0, bottom: 20, left: 25},
         };
     },
     componentDidMount: function() {

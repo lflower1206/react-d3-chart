@@ -61,6 +61,8 @@ var ArcChart = React.createClass({
                 .attr('transform', 'translate(' + this.props.width / 2 + ',' + this.props.width / 2 + ')')
                 .attr('d', this.state.foregroundArc);
 
+console.log(this.state.foregroundArc);
+
         label.datum({ratio: 0})
                 .attr('class', 'label')
                 .attr('y', this.props.width / 2 + this.props.fontSize / 3)
