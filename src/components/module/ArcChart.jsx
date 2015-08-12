@@ -12,6 +12,7 @@ var ArcChart = React.createClass({
             endAngle = Math.min(360 * this.state.ratio, 360) * (Math.PI / 180),
             interpolate = d3.interpolate(d.endAngle, endAngle);
 
+        console.log(this.state);
         return function(t) {
 
             d.endAngle = interpolate(t);
@@ -33,11 +34,11 @@ var ArcChart = React.createClass({
     _calculate: function() {
 
         var ratio = (this.props.value - this.props.minValue) / (this.props.maxValue - this.props.minValue);
-
+        
         this.setState({
             ratio: ratio
         });
-
+        
         return ratio;
     },
     _repaint: function() {
@@ -60,8 +61,6 @@ var ArcChart = React.createClass({
                 .attr('class', 'foreground-arc')
                 .attr('transform', 'translate(' + this.props.width / 2 + ',' + this.props.width / 2 + ')')
                 .attr('d', this.state.foregroundArc);
-
-console.log(this.state.foregroundArc);
 
         label.datum({ratio: 0})
                 .attr('class', 'label')
@@ -109,11 +108,11 @@ console.log(this.state.foregroundArc);
             ratio: 0
         };
     },
-    componentDidMount: function() {
-
+    componentWillMount: function() { 
         this._calculate();
+    },
+    componentDidMount: function() {
         this._repaint();
-
     },
     render: function() {
         return (

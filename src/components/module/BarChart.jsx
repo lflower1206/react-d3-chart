@@ -4,18 +4,51 @@ var React = require('react/addons'),
     d3 = require('d3');
 
 var BarChart = React.createClass({
-    _repaint: function() {
-
-	var barChartHeight = this.props.height - this.state.margin.top - this.state.margin.bottom,
+    _calculate: function() {
+    
+        var barChartHeight = this.props.height - this.state.margin.top - this.state.margin.bottom,
             barChartWidth = this.props.width - this.state.margin.left - this.state.margin.right;
 
-        var xScale = d3.scale.ordinal()
+        var xScale = d3.scale.ordinal() 
                             .domain(d3.range(24))
                             .rangeRoundBands([0, barChartWidth], 0.2);
-
+    
         var yScale = d3.scale.linear()
                             .domain([0, 10000])
                             .range([barChartHeight, 0]);
+
+        this.setState({
+            xScale: xScale,
+            yScale: yScale,
+            barChartHeight: barChartHeight,
+            barChartWidth: barChartWidth
+        });
+
+    },
+    _drawBar: function(d) {
+
+        var xScale = this.state.xScale,
+            yScale = this.state.yScale;
+
+        var x = xScale(d.hour),
+            y = this.state.barChartHeight,
+            width = xScale.rangeBand(),
+            height = this.state.barChartHeight - yScale(d.step),
+            radius = xScale.rangeBand() / 2;
+
+        var path = ['M', x, ',', y,
+                 'v', -(height - radius),
+                 'a', radius, ',', -radius, ' 0 0 1 ', radius, ',', -radius,
+                 'a', radius, ',', radius, ' 0 0 1 ', radius, ',', radius,
+                 'v', height - radius,
+                 'z'];
+
+        return path.join('');
+    },
+    _repaint: function() {
+        var xScale = this.state.xScale,
+            yScale = this.state.yScale,
+            barChartHeight = this.state.barChartHeight;
 
         var xAxis = d3.svg.axis()
                    .scale(xScale)
@@ -26,9 +59,7 @@ var BarChart = React.createClass({
                    .orient('left')
                    .tickFormat(d3.format('s'));
 
-
         var dataset = this.props.data;
-
 
         var that = this,
             svg = d3.select(React.findDOMNode(this.refs.svg))
@@ -38,39 +69,29 @@ var BarChart = React.createClass({
         var axis = svg.append('g')
                       .attr('transform', 'translate(' + this.state.margin.left + ', ' + this.state.margin.bottom + ')');
         
-
         axis.append('g')
             .attr('class', 'x axis')
-            .attr('transform', 'translate(0, ' + barChartHeight + ')')
+            .attr('transform', 'translate(0, ' + this.state.barChartHeight + ')')
             .call(xAxis);
 
         axis.append('g')
             .attr('class', 'y axis')
             .call(yAxis);
 
-        axis.selectAll(".bar")
-                .data(dataset)
-            .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", function(d) {
-                    return xScale(d.hour);
-                })
-                .attr("y", function(d) {
-                    return yScale(d.step);
-                })
-                .attr('rx', xScale.rangeBand() / 2)
-                .attr('ry', 0)
-                .attr("width", xScale.rangeBand())
-                .attr("height", function(d) {
-                    return barChartHeight - yScale(d.step); 
-                });
+        axis.selectAll('.bar')
+            .data(dataset)
+            .enter()
+            .append('path')
+            .attr('class', 'bar')
+            .attr('d', this._drawBar);
+    
     },
     getDefaultProps: function() {
         return {
             width: 320,
             height: 320,
             data: [
-                {hour: 0, step: 2215},
+                {hour: 0, step: 2500},
                 {hour: 1, step: 5542},
                 {hour: 2, step: 453},
                 {hour: 3, step: 111},
@@ -99,8 +120,11 @@ var BarChart = React.createClass({
     },
     getInitialState: function() {
         return {
-	    margin: {top: 20, right: 0, bottom: 20, left: 25},
+            margin: {top: 20, right: 0, bottom: 20, left: 25},
         };
+    },
+    componentWillMount: function() {
+        this._calculate();
     },
     componentDidMount: function() {
         this._repaint();
