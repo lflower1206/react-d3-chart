@@ -8,7 +8,7 @@ var arcChartDIV = document.getElementById('arcChart'),
     barChartDIV = document.getElementById('barChart');
 
 if (arcChartDIV) {
-    React.render(<ArcChart minValue="0" maxValue="100" value="10" />, arcChartDIV);
+    React.render(<ArcChart minValue="0" maxValue="100" value="69" />, arcChartDIV);
 }
 
 if (barChartDIV) {

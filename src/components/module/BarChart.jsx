@@ -25,6 +25,14 @@ var BarChart = React.createClass({
         });
 
     },
+    _barTween: function(d, i, a) {
+
+        var interpolate = d3.interpolate(a, this._drawBar(d));
+
+        return function(t) {
+            return interpolate(t);
+        };
+    },
     _drawBar: function(d) {
 
         var xScale = this.state.xScale,
@@ -78,13 +86,22 @@ var BarChart = React.createClass({
             .attr('class', 'y axis')
             .call(yAxis);
 
-        axis.selectAll('.bar')
-            .data(dataset)
-            .enter()
-            .append('path')
-            .attr('class', 'bar')
-            .attr('d', this._drawBar);
-    
+        var bars = axis.selectAll('.bar')
+                        .data(dataset)
+                        .enter()
+                        .append('path')
+                        .attr('class', 'bar')
+                        .attr('d', function(d) {
+                            return 'M' + xScale(d.hour) + ',' + barChartHeight + 
+                                   'v0' + 
+                                   'a5,-5 0 0 1 5,-5' +
+                                   'a5,5 0 0 1 5,5v0z';
+                        });
+   
+        bars.transition()
+            .duration(1000)
+            .attrTween('d', this._barTween);
+
     },
     getDefaultProps: function() {
         return {

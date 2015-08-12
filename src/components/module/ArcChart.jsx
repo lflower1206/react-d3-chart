@@ -11,12 +11,11 @@ var ArcChart = React.createClass({
         var that = this,
             endAngle = Math.min(360 * this.state.ratio, 360) * (Math.PI / 180),
             interpolate = d3.interpolate(d.endAngle, endAngle);
-
-        console.log(this.state);
+        console.log(d.endAngle + ' / ' + endAngle);
         return function(t) {
 
             d.endAngle = interpolate(t);
-
+            console.log(d.endAngle);
             return that.state.foregroundArc(d);
         };
     },
