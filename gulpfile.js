@@ -5,8 +5,7 @@ var gulp = require('gulp'),
     WebpackDevServer = require('webpack-dev-server'),
     gulpWebpack = require('gulp-webpack'),
     webpackConfig = require('./webpack.config.js'),
-    del = require('del'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin');
+    del = require('del');
 
 gulp.task('default', ['webpack-dev-server']);
 
