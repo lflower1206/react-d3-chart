@@ -11,11 +11,10 @@ var ArcChart = React.createClass({
         var that = this,
             endAngle = Math.min(360 * this.state.ratio, 360) * (Math.PI / 180),
             interpolate = d3.interpolate(d.endAngle, endAngle);
-        console.log(d.endAngle + ' / ' + endAngle);
+        
         return function(t) {
-
             d.endAngle = interpolate(t);
-            console.log(d.endAngle);
+            
             return that.state.foregroundArc(d);
         };
     },
@@ -56,7 +55,7 @@ var ArcChart = React.createClass({
                 .attr('d', this.state.backgroundArc);
 
         var foreground = arcs.append('path')
-                .datum({endAngle: 0})
+                .datum({endAngle: 0.1})
                 .attr('class', 'foreground-arc')
                 .attr('transform', 'translate(' + this.props.width / 2 + ',' + this.props.width / 2 + ')')
                 .attr('d', this.state.foregroundArc);

@@ -21,7 +21,7 @@ module.exports = {
   },
 
   resolve: {
-      extensions: ['', '.jsx'],
+      extensions: ['', '.js', '.jsx'],
       alias: {
           'components': __dirname + '/src/components/',
           'module': __dirname + '/src/components/module/'
@@ -31,7 +31,7 @@ module.exports = {
     loaders: [{
         test: /.jsx$/,
         exclude: [/node_modules/],
-        loader: 'jsxhint!react-hot'
+        loader: 'jsxhint!jsx'
     }]
   },
 
