@@ -3,15 +3,64 @@
     <head>
         <meta charset="utf-8">
         <title>React and D3 Chart Demo</title>
+
+        <style type="text/css" media="screen">
+            body {
+              font-family: 'Helvetica Neue','Helvetica','Arial','Microsoft JhengHei','sans-serif';
+              font-style: normal;
+              font-weight: 300;
+
+              text-align: center;
+            }
+
+            .arc-chart {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .background {
+                fill: #FFFFFF;
+                fill-opacity: .01;
+            }
+
+            .background-arc {
+                fill: #d8d8d8;
+            }
+
+            .foreground-arc {
+                fill: #62BFD0;
+            }
+
+            .label {
+                fill: #f8a1b1;
+            }
+
+            .bar-chart {
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .bar {
+              fill: #62bfd0;
+            }
+
+            .axis {
+              font: 10px sans-serif;
+            }
+
+            .axis path,
+            .axis line {
+              fill: none;
+              stroke: #d8d8d8;
+            }
+            
+            .axis text {
+              fill: #d8d8d8;
+            }
+        </style>
     </head>
     <body>
-        <ul>
-            <li>
-                <a href="ArcChart.html">Arc Chart Demo</a>
-            </li>
-            <li>
-                <a href="BarChart.html">Bar Chart Demo</a>
-            </li>
-        </ul>
+        <div id="router"></div>
+        <script type="text/javascript" src="react-d3-chart.min.js"></script>
     </body>
 </html>

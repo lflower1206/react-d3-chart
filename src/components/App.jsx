@@ -1,16 +1,11 @@
 'use strict';
 
 var React = require('react/addons'),
-    ArcChart = require('module/ArcChart'),
-    BarChart = require('module/BarChart');
+    Router = require('react-router'),
+    Route = Router.Route,
+    AppRouter = require('./AppRouter');
 
-var arcChartDIV = document.getElementById('arcChart'),
-    barChartDIV = document.getElementById('barChart');
+Router.run(AppRouter, Router.HistoryLocation, function(Root){
+    React.render(<Root />, document.getElementById('router'));
+});
 
-if (arcChartDIV) {
-    React.render(<ArcChart minValue="0" maxValue="100" value="69" />, arcChartDIV);
-}
-
-if (barChartDIV) {
-    React.render(<BarChart />, barChartDIV);
-}
