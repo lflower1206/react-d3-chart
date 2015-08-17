@@ -17,6 +17,9 @@ var AppHandler = React.createClass({
                     <li>
                         <Link to="barChart">Bar Chart</Link>
                     </li>
+                    <li>
+                        <Link to="rangebarChart">Range Bar Chart</Link>
+                    </li>
                 </ul>
                 <div>
                     <RouteHandler />
