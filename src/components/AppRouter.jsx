@@ -4,11 +4,6 @@ var React = require('react/addons'),
     Router = require('react-router'),
     Route = Router.Route;
 
-/* var AppHandler = React.createFactory(require('./AppHandler')),
-    ArcChart = React.createFactory(require('module/ArcChart')),
-    BarChart = React.createFactory(require('module/BarChart'));
-*/
-
 var AppHandler = require('./AppHandler'),
     ArcChart = require('module/ArcChart'),
     BarChart = require('module/BarChart');

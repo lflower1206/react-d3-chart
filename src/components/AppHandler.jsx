@@ -10,8 +10,14 @@ var AppHandler = React.createClass({
     
         return (
             <div>
-                <Link to="arcChart">Arc Chart</Link>
-                <Link to="barChart">Bar CHart</Link>
+                <ul>
+                    <li>
+                        <Link to="arcChart">Arc Chart</Link>
+                    </li>
+                    <li>
+                        <Link to="barChart">Bar Chart</Link>
+                    </li>
+                </ul>
                 <div>
                     <RouteHandler />
                 </div>
