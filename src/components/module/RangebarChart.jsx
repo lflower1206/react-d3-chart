@@ -56,7 +56,6 @@ var RangeBarChart = React.createClass({
             .attr('class', 'y axis')
             .call(yAxis);
 
-
         var bars = axis.selectAll('.range')
                        .data(this.props.data)
                        .enter()
@@ -64,35 +63,33 @@ var RangeBarChart = React.createClass({
                        .attr('class', 'range')
                        .attr('x', function(d) {return xScale(d.hour);})
                        .attr('y', function(d) {
-                           return yScale(d.range.max);
+                           var max = yScale(d.range.max),
+                               min = yScale(d.range.min);
+                           
+                           // calculate middle point
+                           return max + (min - max) / 2;
                        })
                        .attr('width', xScale.rangeBand())
-                       .attr('height', function(d) {
-
-                           var max = yScale(d.range.max),
-                               min = yScale(d.range.min); 
-
-                           return min - max;
-                       })
-                       .attr('rx', xScale.rangeBand() / 2)
-                       .attr('ry', xScale.rangeBand() / 2);
+                       .attr('height', 0);
                        
-                       /* bars.transition()
-                           .duration(1000)
-                           .attr('y', function(d) {
-                               return drawableHeight - yScale(d.range.max);
-                           })
-                           .attr('height', function(d) {
-                               return drawableHeight - yScale(d.range.min);
-                           }); */ 
+        bars.transition()
+            .duration(1000)
+            .attr('y', function(d) {
+                return yScale(d.range.max);
+            })
+            .attr('height', function(d) {
+                return yScale(d.range.min) - yScale(d.range.max);
+            })
+            .attr('rx', xScale.rangeBand() / 2)
+            .attr('ry', xScale.rangeBand() / 2);
     },
     getDefaultProps: function() {
         return {
             width: 320,
             height: 320,
             data: [
-                {hour: 0, range: {min: 55, max: 112}},
-                {hour: 1, range: {min: 63, max: 105}},
+                {hour: 0, range: {min: 70, max: 112}},
+                {hour: 1, range: {min: 75, max: 99}},
                 {hour: 2, range: {min: 72, max: 99}},
                 {hour: 3, range: {min: 60, max: 87}},
                 {hour: 4, range: {min: 65, max: 76}},
