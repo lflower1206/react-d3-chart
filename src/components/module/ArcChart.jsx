@@ -6,6 +6,14 @@ var React = require('react/addons'),
 var τ = 2 * Math.PI;
 
 var ArcChart = React.createClass({
+    propTypes: {
+        fontSize: React.PropTypes.number,
+        height: React.PropTypes.number,
+        maxValue: React.PropTypes.number,
+        minValue: React.PropTypes.number,
+        value: React.PropTypes.number,
+        width: React.PropTypes.number
+    },
     _arcTween: function(d) {
 
         var that = this,
@@ -39,7 +47,7 @@ var ArcChart = React.createClass({
         
         return ratio;
     },
-    _repaint: function() {
+    _draw: function() {
         var that = this,
             svg = d3.select(React.findDOMNode(this.refs.svg))
                     .attr('width', this.props.width)
@@ -110,7 +118,7 @@ var ArcChart = React.createClass({
         this._calculate();
     },
     componentDidMount: function() {
-        this._repaint();
+        this._draw();
     },
     render: function() {
         return (

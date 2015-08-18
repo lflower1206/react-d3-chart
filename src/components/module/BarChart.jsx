@@ -4,9 +4,14 @@ var React = require('react/addons'),
     d3 = require('d3');
 
 var BarChart = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array,
+        height: React.PropTypes.number,
+        width: React.PropTypes.number
+    },
     _calculate: function() {
     
-        var barChartHeight = this.props.height - this.state.margin.top - this.state.margin.bottom,
+        var drawableHeight = this.props.height - this.state.margin.top - this.state.margin.bottom,
             barChartWidth = this.props.width - this.state.margin.left - this.state.margin.right;
 
         var xScale = d3.scale.ordinal() 
@@ -15,12 +20,12 @@ var BarChart = React.createClass({
     
         var yScale = d3.scale.linear()
                             .domain([0, 10000])
-                            .range([barChartHeight, 0]);
+                            .range([drawableHeight, 0]);
 
         this.setState({
             xScale: xScale,
             yScale: yScale,
-            barChartHeight: barChartHeight,
+            drawableHeight: drawableHeight,
             barChartWidth: barChartWidth
         });
 
@@ -39,9 +44,9 @@ var BarChart = React.createClass({
             yScale = this.state.yScale;
 
         var x = xScale(d.hour),
-            y = this.state.barChartHeight,
+            y = this.state.drawableHeight,
             width = xScale.rangeBand(),
-            height = this.state.barChartHeight - yScale(d.step),
+            height = this.state.drawableHeight - yScale(d.step),
             radius = xScale.rangeBand() / 2;
 
         var path = ['M', x, ',', y,
@@ -56,7 +61,7 @@ var BarChart = React.createClass({
     _repaint: function() {
         var xScale = this.state.xScale,
             yScale = this.state.yScale,
-            barChartHeight = this.state.barChartHeight;
+            drawableHeight = this.state.drawableHeight;
 
         var xAxis = d3.svg.axis()
                    .scale(xScale)
@@ -79,7 +84,7 @@ var BarChart = React.createClass({
         
         axis.append('g')
             .attr('class', 'x axis')
-            .attr('transform', 'translate(0, ' + this.state.barChartHeight + ')')
+            .attr('transform', 'translate(0, ' + this.state.drawableHeight + ')')
             .call(xAxis);
 
         axis.append('g')
@@ -92,7 +97,7 @@ var BarChart = React.createClass({
                         .append('path')
                         .attr('class', 'bar')
                         .attr('d', function(d) {
-                            return 'M' + xScale(d.hour) + ',' + barChartHeight + 
+                            return 'M' + xScale(d.hour) + ',' + drawableHeight + 
                                    'v0' + 
                                    'a5,-5 0 0 1 5,-5' +
                                    'a5,5 0 0 1 5,5v0z';

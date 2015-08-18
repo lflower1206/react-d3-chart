@@ -4,6 +4,11 @@ var React = require('react/addons'),
     d3 = require('d3');
 
 var RangeBarChart = React.createClass({
+    propTypes: {
+        data: React.PropTypes.array,
+        height: React.PropTypes.number,
+        width: React.PropTypes.number
+    },
     _calculate: function() {
 
         var drawableHeight = this.props.height - this.state.margin.top - this.state.margin.bottom,

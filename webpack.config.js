@@ -32,7 +32,7 @@ module.exports = {
     loaders: [{
         test: /.jsx$/,
         exclude: /node_modules/,
-        loader: 'eslint!react-hot'
+        loader: 'eslint!jsxhint!react-hot'
     }]
   },
 
