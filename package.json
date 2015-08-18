@@ -1,7 +1,7 @@
 {
-  "name": "react-fullpage",
+  "name": "react-d3-chart",
   "version": "0.0.1",
-  "description": "react fullpage",
+  "description": "integrate react and d3",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "del": "^1.2.0",
+    "eslint-loader": "^1.0.0",
+    "eslint-plugin-react": "^3.2.3",
     "gulp": "^3.9.0",
     "gulp-compass": "^2.1.0",
     "gulp-rename": "^1.2.2",

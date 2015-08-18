@@ -31,7 +31,7 @@ module.exports = {
     loaders: [{
         test: /.jsx$/,
         exclude: [/node_modules/],
-        loader: 'jsxhint!jsx'
+        loader: 'eslint!jsx'
     }]
   },
 
