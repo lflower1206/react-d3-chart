@@ -68,11 +68,14 @@ var RangeBarChart = React.createClass({
                        })
                        .attr('width', xScale.rangeBand())
                        .attr('height', function(d) {
-                           return drawableHeight - yScale(d.range.min);
+
+                           var max = yScale(d.range.max),
+                               min = yScale(d.range.min); 
+
+                           return min - max;
                        })
                        .attr('rx', xScale.rangeBand() / 2)
                        .attr('ry', xScale.rangeBand() / 2);
-
                        
                        /* bars.transition()
                            .duration(1000)
@@ -89,7 +92,29 @@ var RangeBarChart = React.createClass({
             height: 320,
             data: [
                 {hour: 0, range: {min: 55, max: 112}},
-                {hour: 1, range: {min: 63, max: 105}}
+                {hour: 1, range: {min: 63, max: 105}},
+                {hour: 2, range: {min: 72, max: 99}},
+                {hour: 3, range: {min: 60, max: 87}},
+                {hour: 4, range: {min: 65, max: 76}},
+                {hour: 5, range: {min: 70, max: 78}},
+                {hour: 6, range: {min: 71, max: 75}},
+                {hour: 7, range: {min: 69, max: 77}},
+                {hour: 8, range: {min: 65, max: 76}},
+                {hour: 9, range: {min: 64, max: 80}},
+                {hour: 10, range: {min: 72, max: 80}},
+                {hour: 11, range: {min: 75, max: 77}},
+                {hour: 12, range: {min: 75, max: 81}},
+                {hour: 13, range: {min: 68, max: 72}},
+                {hour: 14, range: {min: 66, max: 75}},
+                {hour: 15, range: {min: 61, max: 69}},
+                {hour: 16, range: {min: 70, max: 89}},
+                {hour: 17, range: {min: 65, max: 110}},
+                {hour: 18, range: {min: 80, max: 90}},
+                {hour: 19, range: {min: 81, max: 92}},
+                {hour: 20, range: {min: 79, max: 99}},
+                {hour: 21, range: {min: 78, max: 102}},
+                {hour: 22, range: {min: 67, max: 95}},
+                {hour: 23, range: {min: 78, max: 96}},
             ]
         };
     },
