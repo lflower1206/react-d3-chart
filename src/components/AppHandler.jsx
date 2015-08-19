@@ -15,6 +15,9 @@ var AppHandler = React.createClass({
                         <Link to="arcChart">Arc Chart</Link>
                     </li>
                     <li>
+                        <Link to="areaChart">Area Chart</Link>
+                    </li>
+                    <li>
                         <Link to="barChart">Bar Chart</Link>
                     </li>
                     <li>
